@@ -1,0 +1,45 @@
+.images img{
+    width: 145px;
+    background-color: black;
+}
+
+#dropdownMenu {
+    display: flex;
+    align-items: center;
+}
+
+#dropdownMenu i {
+    font-size: 20px;
+}
+
+#dropdown {
+    display: none;
+    position: absolute;
+    left: 170px;
+    list-style-type: none;
+    padding: 0;
+    background-color: #212529;
+    color: white;
+}
+
+#dropdown li {
+    padding: 5px 10px;
+}
+
+.tijdbalkContainer {
+    width: 500px;
+    height: 25px;
+    border: white 1px solid;
+}
+
+nav  * {
+    margin: 0 5px;
+}
+
+#tijdbalk {
+    width: 100%;
+    height: 23px;
+    background-color: #28a745;
+    transition: linear 1s;
+    margin: 0;
+}
