@@ -16,7 +16,7 @@
     <main class="bg-image" style="background-image: url('images/backgrounds/background.png'); height: 100vh; background-repeat: no-repeat; background-position-y: center;">
         <nav style="height: 50px;" class="bg-dark d-flex justify-content-start align-items-center">
             <a class="btn btn-secondary" href="index.html">Home</a>
-            <button class="btn btn-info" id="dropdownMenu"><i id="pijl" class="fas fa-angle-right"></i>&nbsp;Difficulty</button>
+            <button class="btn btn-danger" id="dropdownMenu"><i id="pijl" class="fas fa-angle-right"></i>&nbsp;Difficulty</button>
             <button class="btn btn-success" id="startButton">Start</button>
             <div class="tijdbalkContainer"><div id="tijdbalk" style="display: none"></div></div>
             <p style="color: white;" id="tijdText"></p>
@@ -26,29 +26,11 @@
             <li><button id="medium" class="btn btn-warning">Medium&nbsp;<i id="mediumIcon" style="display: none;" class="fas fa-angle-left"></i></button></li>
             <li><button id="hard" class="btn btn-danger">Hard&nbsp;<i id="hardIcon" class="fas fa-angle-left"></i></button></li>
         </ul>
-        <div class="images mt-5">
-            <img class="image" src="images/characters/sindri.jpg"></img>
-            <img class="image" src="images/characters/kratos.png"></img>
-            <img class="image" src="images/characters/brok.jpg"></img>
-            <img class="image" src="images/characters/mimir.jpg"></img>
-            <img class="image" src="images/characters/freya.png"></img>
-            <img class="image" src="images/characters/baldur.jpg"></img>
-            <img class="image" src="images/characters/leviathanAxe.png"></img>
-            <img class="image" src="images/characters/atreus.png"></img>
-            <img class="image" src="images/characters/jormungandr.png"></img>
-            <img class="image" src="images/characters/bladesOfChaos.png"></img>
+        <div id="imageContainer" class="images mt-5">
+
         </div>
-        <div id="buttonDiv" class="d-flex justify-content-center mt-5">
-            <button class="btn btn-primary m-1">Sindri</button>
-            <button class="btn btn-primary m-1">Kratos</button>
-            <button class="btn btn-primary m-1">Brok</button>
-            <button class="btn btn-primary m-1">Mimir</button>
-            <button class="btn btn-primary m-1">Freya</button>
-            <button class="btn btn-primary m-1">Baldur</button>
-            <button class="btn btn-primary m-1">Leviathan Axe</button>
-            <button class="btn btn-primary m-1">Atreus</button>
-            <button class="btn btn-primary m-1">Jörmungandr</button>
-            <button class="btn btn-primary m-1">Blades of Chaos</button>
+        <div id="buttonContainer" class="d-flex justify-content-center mt-5">
+
         </div>
     </main>
     <script src="game.js"></script>

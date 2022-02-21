@@ -12,10 +12,19 @@
     font-size: 20px;
 }
 
+#imageContainer {
+    width: 1600px;
+    margin: 0 auto;
+}
+
+#imageContainer * {
+    margin: 0 5px;
+}
+
 #dropdown {
     display: none;
     position: absolute;
-    left: 170px;
+    left: 85px;
     list-style-type: none;
     padding: 0;
     background-color: #212529;
