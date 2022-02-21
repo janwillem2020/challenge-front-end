@@ -18,8 +18,8 @@ var imageContainer = document.getElementById("imageContainer")
 var buttonContainer = document.getElementById("buttonContainer")
 
 // Check clicked images
-var clickedButton
-var clickedImage
+var lastClickedButton
+var lastClickedImage
 
 // Dropdown button
 var dropButton = document.getElementById("dropdownMenu")
@@ -86,42 +86,59 @@ function shuffle(array, shuffleAmount) {
     return array
 }
 
-// Generate Images en buttons
+
+
+// Generate shuffled Images en buttons
 function generateElements(qty) {
     imageContainer.innerHTML = ""
     buttonContainer.innerHTML = ""
     shuffle(characters, 10)
-    console.log(shuffle(characters.slice(0, qty), 10))
-
+    gameArray = characters.slice(0, qty)
+    shuffle(gameArray, 10)
+    var score = 0
     for (i = 0; i < qty; i++) {
         var image = document.createElement("img")
-        image.src = characters[i]["path"]
-        image.dataset.character = characters[i]["name"]
+        image.src = gameArray[i]["path"]
+        image.dataset.character = gameArray[i]["name"]
         image.onclick = function() {
-            clickedImage = this.dataset.character
+            lastClickedImage = this
 
-            if (clickedButton == clickedImage) {
-                console.log("correct")
+            if (lastClickedButton.dataset.character == lastClickedImage.dataset.character) {
+                this.style.display = "none"
+                lastClickedButton.style.display = "none"
+                lastClickedImage = ""
+                lastClickedButton = ""
+                score++
+                if (score == qty) {
+                    endGame()
+                }
             } else {
-                console.log("incorrect")
+                wrongAnswer()
             }
         }
 
         imageContainer.appendChild(image)
     }
-    shuffle(characters.slice(0, qty), 10)
+    shuffle(gameArray, 10)
     for (i = 0; i < qty; i++) {
         var button = document.createElement("button")
-        button.innerHTML = characters[i]["name"]
-        button.dataset.character = characters[i]["name"]
+        button.innerHTML = gameArray[i]["name"]
+        button.dataset.character = gameArray[i]["name"]
         button.classList.add("btn", "btn-primary", "m-1")
         button.onclick = function() {
-            clickedButton = this.dataset.character
+            lastClickedButton = this
             
-            if (clickedButton == clickedImage) {
-                console.log("correct")
+            if (lastClickedButton.dataset.character == lastClickedImage.dataset.character) {
+                this.style.display = "none"
+                lastClickedImage.style.display = "none"
+                lastClickedImage = ""
+                lastClickedButton = ""
+                score++
+                if (score == qty) {
+                    endGame()
+                }
             } else {
-                console.log("incorrect")
+                wrongAnswer()
             }
         }
 
@@ -135,7 +152,7 @@ function startTijd() {
     tijdProcent = currentTime / totalTime * 100
     document.getElementById("tijdbalk").style.width = tijdProcent + "%"
     if (currentTime == 0) {
-        clearInterval(timer)
+        endGame()
     }
 }
 
@@ -148,7 +165,6 @@ function startGame() {
     timer = setInterval(startTijd ,1000)
     document.getElementById("tijdbalk").style.display = "inline-block"
     document.getElementById("tijdText").innerHTML = ""
-    console.log(imageAmount)
     generateElements(imageAmount)
 }
 
@@ -157,9 +173,23 @@ function endGame() {
     startButton.classList.add("btn-success")
     startButton.classList.remove("btn-danger")
     startButton.innerHTML = "Start"
-    clearInterval(timer)
+    
     gameState = "stopped"
     document.getElementById("tijdText").innerHTML = "Je had nog " + currentTime + " seconden over."
+
+    // Clear elements
+    imageContainer.innerHTML = ""
+    buttonContainer.innerHTML = ""
+
+    // Reset timer
+    clearInterval(timer)
+    currentTime = totalTime
+    tijdProcent = currentTime / totalTime * 100
+    document.getElementById("tijdbalk").style.width = tijdProcent + "%"
+}
+
+function wrongAnswer() {
+    alert("FOUTTTTT")
 }
 
 // Onclick functions
@@ -179,6 +209,7 @@ dropButton.onclick = function dropdown() {
     }
 }
 
+// Hard difficulty
 document.getElementById("hard").onclick = function() {
     if (currentDifficulty != "hard") {
         currentDifficulty = "hard"
@@ -194,6 +225,7 @@ document.getElementById("hard").onclick = function() {
     }
 }
 
+// Medium difficulty
 document.getElementById("medium").onclick = function() {
     if (currentDifficulty != "medium") {
         currentDifficulty = "medium"
@@ -209,6 +241,7 @@ document.getElementById("medium").onclick = function() {
     }
 }
 
+// Easy difficulty
 document.getElementById("easy").onclick = function() {
     if (currentDifficulty != "easy") {
         currentDifficulty = "easy"
@@ -224,6 +257,7 @@ document.getElementById("easy").onclick = function() {
     }
 }
 
+// Check gamestate
 startButton.onclick = function() {
     if (gameState == "notStarted") {
         startGame()
