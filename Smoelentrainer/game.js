@@ -1,5 +1,23 @@
 // variables
 
+var matchHistoryDiv = document.getElementById("matchHistoryDiv")
+var gameContent = document.getElementById("game")
+
+function matchHistoryView() {
+    gameContent.style.display = "none"
+    matchHistoryDiv.style.display = "block"
+}
+
+function backToGame() {
+    gameContent.style.display = "block"
+    matchHistoryDiv.style.display = "none"
+}
+
+aantalMatches = 0
+
+gameContent.style.display = "block"
+matchHistoryDiv.style.display = "none"
+
 // Standaard difficulty en aantal images
 var imageAmount = 10
 var currentDifficulty = "hard"
@@ -8,6 +26,9 @@ var currentDifficulty = "hard"
 var totalTime = 20
 currentTime = totalTime - 1
 var timer
+
+// Playerscore
+var playerScore
 
 // Startbutton en standaard gamestate
 var startButton = document.getElementById("startButton")
@@ -26,6 +47,8 @@ var dropButton = document.getElementById("dropdownMenu")
 
 // Dropdown menu state
 var currentState = "hidden"
+
+var matchHistory = []
 
 // Chracters object array
 var characters = [
@@ -183,9 +206,67 @@ function endGame() {
 
     // Reset timer
     clearInterval(timer)
+    var playerTime = currentTime
     currentTime = totalTime
     tijdProcent = currentTime / totalTime * 100
     document.getElementById("tijdbalk").style.width = tijdProcent + "%"
+
+    // Calculate score
+    playerScore = imageAmount * playerTime
+    var today = new Date();
+    var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+
+    addGameToHistory(playerScore, dateTime)
+}
+
+function addGameToHistory(playerScore, dateTime) {
+    var newMatch = {score: playerScore, time: dateTime};
+
+    matchHistory.push(newMatch)
+    
+    aantalMatches++
+    if (aantalMatches > 10) {
+        matchHistory.splice(0, 1)
+    }
+    showMatchHistory()
+}
+
+function showMatchHistory() {
+    matchHistoryList.innerHTML = ""
+    matchHistory.forEach(function(value){
+        var currentMatchTime = value["time"]
+        var currentMatchScore = value["score"]
+        var matchHistoryList = document.getElementById("matchHistoryList")
+        matchHistoryList.innerHTML += "<li>Score: " + currentMatchScore + " Gespeeld op: " + currentMatchTime + "</li>"
+    })
+}
+
+function sortByPoints(asc) {
+    if (asc) {
+        matchHistory.sort((a, b) => {
+            return a.score - b.score;
+        });
+    } else {
+        matchHistory.sort((a, b) => {
+            return b.score - a.score;
+        });
+    }
+    showMatchHistory()
+}
+
+function sortByDate(asc) {
+    if (asc) {
+        matchHistory.sort(function(a,b) {
+            return new Date(b.time) - new Date(a.time);
+        });
+    } else {
+        matchHistory.sort(function(a,b) {
+            return new Date(a.time) - new Date(b.time);
+        });
+    }
+    showMatchHistory()
 }
 
 function wrongAnswer() {

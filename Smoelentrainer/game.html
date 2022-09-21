@@ -13,14 +13,15 @@
     <script src="https://kit.fontawesome.com/cdec2dabe7.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <main class="bg-image" style="background-image: url('images/backgrounds/background.png'); height: 100vh; background-repeat: no-repeat; background-position-y: center;">
+    <main id="game" class="bg-image" style="background-image: url('images/backgrounds/background.png'); height: 100vh; background-repeat: no-repeat; background-position-y: center;">
         <nav style="height: 50px;" class="bg-dark d-flex justify-content-start align-items-center">
             <a class="btn btn-secondary" href="index.html">Home</a>
             <button class="btn btn-danger" id="dropdownMenu"><i id="pijl" class="fas fa-angle-right"></i>&nbsp;Difficulty</button>
             <button class="btn btn-success" id="startButton">Start</button>
             <div class="tijdbalkContainer"><div id="tijdbalk" style="display: none"></div></div>
             <p style="color: white;" id="tijdText"></p>
-            <a class="btn btn-secondary" href="matchHistory.html">Match History</a>
+            <button class="btn btn-secondary" onclick="matchHistoryView()">Match History</button>
+            <a href="settings.html">Settings</a>
         </nav>
         <ul id="dropdown">
             <li><button id="easy" class="btn btn-success">Easy&nbsp;<i id="easyIcon" style="display: none;" class="fas fa-angle-left"></i></button></li>
@@ -34,6 +35,18 @@
 
         </div>
     </main>
+    <div id="matchHistoryDiv">
+        <h1>Last 10 matches:</h1>
+        <button onclick="backToGame()">back to game</button>
+        <ul id="matchHistoryList">
+        
+        </ul>
+        <button onclick="sortByPoints(true)">Sorteer op punten asc</button>
+        <button onclick="sortByPoints(false)">Sorteer op punten desc</button>
+        <button onclick="sortByDate(true)">Sorteer op datum asc</button>
+        <button onclick="sortByDate(false)">Sorteer op datum desc</button>
+
+    </div>
     <script src="game.js"></script>
 </body>
 </html>
