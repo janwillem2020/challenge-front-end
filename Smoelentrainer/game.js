@@ -2,21 +2,33 @@
 
 var matchHistoryDiv = document.getElementById("matchHistoryDiv")
 var gameContent = document.getElementById("game")
+var blindspot = document.getElementById("blindspot")
 
 function matchHistoryView() {
+    blindspot.style.display = "none"
     gameContent.style.display = "none"
     matchHistoryDiv.style.display = "block"
 }
 
 function backToGame() {
+    blindspot.style.display = "none"
     gameContent.style.display = "block"
     matchHistoryDiv.style.display = "none"
 }
 
+function blindspotView() {
+    blindspot.style.display = "block"
+    gameContent.style.display = "none"
+    matchHistoryDiv.style.display = "none"
+    showBlindspot()
+}
+
 aantalMatches = 0
+var top3characters
 
 gameContent.style.display = "block"
 matchHistoryDiv.style.display = "none"
+blindspot.style.display = "none"
 
 // Standaard difficulty en aantal images
 var imageAmount = 10
@@ -54,43 +66,53 @@ var matchHistory = []
 var characters = [
     {
         name:"Sindri",
-        path:"images/characters/sindri.jpg"
+        path:"images/characters/sindri.jpg",
+        fouten:0
     },
     {
         name:"Kratos",
-        path:"images/characters/kratos.png"
+        path:"images/characters/kratos.png",
+        fouten:0
     },
     {
         name:"Brok",
-        path:"images/characters/brok.jpg"
+        path:"images/characters/brok.jpg",
+        fouten:0
     },
     {
         name:"Mimir",
-        path:"images/characters/mimir.jpg"
+        path:"images/characters/mimir.jpg",
+        fouten:0
     },
     {
         name:"Freya",
-        path:"images/characters/freya.png"
+        path:"images/characters/freya.png",
+        fouten:0
     },
     {
         name:"Baldur",
-        path:"images/characters/baldur.jpg"
+        path:"images/characters/baldur.jpg",
+        fouten:0
     },
     {
         name:"Leviathan Axe",
-        path:"images/characters/leviathanAxe.png"
+        path:"images/characters/leviathanAxe.png",
+        fouten:0
     },
     {
         name:"Atreus",
-        path:"images/characters/atreus.png"
+        path:"images/characters/atreus.png",
+        fouten:0
     },
     {
         name:"Jörmungandr",
-        path:"images/characters/jormungandr.png"
+        path:"images/characters/jormungandr.png",
+        fouten:0
     },
     {
         name:"Blades Of Chaos",
-        path:"images/characters/bladesOfChaos.png"
+        path:"images/characters/bladesOfChaos.png",
+        fouten:0
     }
 ]
 
@@ -136,7 +158,9 @@ function generateElements(qty) {
                     endGame()
                 }
             } else {
-                wrongAnswer()
+                wrongAnswer(lastClickedButton.dataset.character)
+                lastClickedImage = ""
+                lastClickedButton = ""
             }
         }
 
@@ -161,7 +185,9 @@ function generateElements(qty) {
                     endGame()
                 }
             } else {
-                wrongAnswer()
+                wrongAnswer(lastClickedImage.dataset.character)
+                lastClickedImage = ""
+                lastClickedButton = ""
             }
         }
 
@@ -269,8 +295,30 @@ function sortByDate(asc) {
     showMatchHistory()
 }
 
-function wrongAnswer() {
-    alert("FOUTTTTT")
+function wrongAnswer(character) {
+    characters.find(x => x.name == character).fouten++;
+    characters.sort((a, b) => {
+        return b.fouten - a.fouten;
+    });
+
+    top3characters = characters.filter(function(el) {
+        return el.fouten > 0
+    });
+    top3characters = top3characters.slice(0, 3);
+}
+
+function showBlindspot() {
+    document.getElementById("place1image").src = top3characters[0].path
+    document.getElementById("place1name").innerHTML = top3characters[0].name
+    document.getElementById("place1name").innerHTML = "Aantal keer fout: " + top3characters[0].fouten
+
+    document.getElementById("place2image").src = top3characters[1].path
+    document.getElementById("place2name").innerHTML = top3characters[1].name
+    document.getElementById("place2name").innerHTML = "Aantal keer fout: " + top3characters[1].fouten
+
+    document.getElementById("place3image").src = top3characters[2].path
+    document.getElementById("place3name").innerHTML = top3characters[2].name
+    document.getElementById("place3name").innerHTML = "Aantal keer fout: " + top3characters[2].fouten
 }
 
 // Onclick functions

@@ -52,3 +52,13 @@ nav  * {
     transition: linear 1s;
     margin: 0;
 }
+
+#blindspotCharacters {
+    display: flex;
+    flex-direction: row;
+}
+
+#blindspotCharacters div img {
+    width: 145px;
+    background-color: black;
+}
