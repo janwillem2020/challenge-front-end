@@ -4,18 +4,21 @@ var matchHistoryDiv = document.getElementById("matchHistoryDiv")
 var gameContent = document.getElementById("game")
 var blindspot = document.getElementById("blindspot")
 
+// Laat de gebruiken de match history zien
 function matchHistoryView() {
     blindspot.style.display = "none"
     gameContent.style.display = "none"
     matchHistoryDiv.style.display = "block"
 }
 
+// Laat de gebruiker de game zien
 function backToGame() {
     blindspot.style.display = "none"
     gameContent.style.display = "block"
     matchHistoryDiv.style.display = "none"
 }
 
+// Laat de gebruiker de blindspot zien
 function blindspotView() {
     blindspot.style.display = "block"
     gameContent.style.display = "none"
@@ -131,8 +134,6 @@ function shuffle(array, shuffleAmount) {
     return array
 }
 
-
-
 // Generate shuffled Images en buttons
 function generateElements(qty) {
     imageContainer.innerHTML = ""
@@ -239,6 +240,7 @@ function endGame() {
 
     // Calculate score
     playerScore = imageAmount * playerTime
+
     var today = new Date();
     var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -247,6 +249,7 @@ function endGame() {
     addGameToHistory(playerScore, dateTime)
 }
 
+// Voegt de recent gespeelde game toe aan de match history
 function addGameToHistory(playerScore, dateTime) {
     var newMatch = {score: playerScore, time: dateTime};
 
@@ -259,6 +262,7 @@ function addGameToHistory(playerScore, dateTime) {
     showMatchHistory()
 }
 
+// print de match history op het scherm
 function showMatchHistory() {
     matchHistoryList.innerHTML = ""
     matchHistory.forEach(function(value){
@@ -269,6 +273,7 @@ function showMatchHistory() {
     })
 }
 
+// sorteert de gespeelde matches op gewenste volgorde van tijd
 function sortByPoints(asc) {
     if (asc) {
         matchHistory.sort((a, b) => {
@@ -282,6 +287,7 @@ function sortByPoints(asc) {
     showMatchHistory()
 }
 
+// sorteert de gespeelde matches op gewenste volgorde van datum
 function sortByDate(asc) {
     if (asc) {
         matchHistory.sort(function(a,b) {
@@ -295,6 +301,7 @@ function sortByDate(asc) {
     showMatchHistory()
 }
 
+// deze functie voegt fouten toe bij desbetreffende character en kiest top 3 meest gemaakte fouten
 function wrongAnswer(character) {
     characters.find(x => x.name == character).fouten++;
     characters.sort((a, b) => {
@@ -307,18 +314,19 @@ function wrongAnswer(character) {
     top3characters = top3characters.slice(0, 3);
 }
 
+// Zet alle informatie in elementen
 function showBlindspot() {
     document.getElementById("place1image").src = top3characters[0].path
     document.getElementById("place1name").innerHTML = top3characters[0].name
-    document.getElementById("place1name").innerHTML = "Aantal keer fout: " + top3characters[0].fouten
+    document.getElementById("place1fouten").innerHTML = "Aantal keer fout: " + top3characters[0].fouten
 
     document.getElementById("place2image").src = top3characters[1].path
     document.getElementById("place2name").innerHTML = top3characters[1].name
-    document.getElementById("place2name").innerHTML = "Aantal keer fout: " + top3characters[1].fouten
+    document.getElementById("place2fouten").innerHTML = "Aantal keer fout: " + top3characters[1].fouten
 
     document.getElementById("place3image").src = top3characters[2].path
     document.getElementById("place3name").innerHTML = top3characters[2].name
-    document.getElementById("place3name").innerHTML = "Aantal keer fout: " + top3characters[2].fouten
+    document.getElementById("place3fouten").innerHTML = "Aantal keer fout: " + top3characters[2].fouten
 }
 
 // Onclick functions
